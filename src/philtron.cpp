@@ -33,6 +33,10 @@ public:
     auto ptr_key = reinterpret_cast<ptr_t>(ptr);
 
     allocations[ptr_key] = size;
+    current_total += size;
+
+    if(current_total > peak_total)
+      peak_total = current_total;
 
     return;
   }
@@ -50,7 +54,8 @@ public:
 
 private:
   std::map<ptr_t, alloc_size_t> allocations;
-
+  alloc_size_t current_total;
+  alloc_size_t peak_total;
 };
 
 
