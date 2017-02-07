@@ -34,7 +34,7 @@ public:
     return;
   }
 
-  void deallocate(ptr_t ptr) {
+  void deallocate(void *ptr) {
     auto ptr_key = reinterpret_cast<ptr_t>(ptr);
 
     auto found = allocations.find(ptr_key);
