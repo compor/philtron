@@ -17,14 +17,14 @@
 // using std::map
 
 
-class AllocationTracer {
+class AllocationTracker {
 public:
   using ptr_t = long long unsigned int;
   using alloc_size_t = long long unsigned int;
 
-  AllocationTracer() = default;
-  AllocationTracer(const AllocationTracer &) = default;
-  ~AllocationTracer() = default;
+  AllocationTracker() = default;
+  AllocationTracker(const AllocationTracker &) = default;
+  ~AllocationTracker() = default;
 
   void allocate(void *ptr, alloc_size_t size) {
     auto ptr_key = reinterpret_cast<ptr_t>(ptr);
@@ -46,9 +46,12 @@ public:
   }
 
 private:
-  static std::map<ptr_t, alloc_size_t> allocations;
+  std::map<ptr_t, alloc_size_t> allocations;
 
 };
+
+
+static AllocationTracker gAllocationTracker;
 
 
 /* external calls to be filtered */
