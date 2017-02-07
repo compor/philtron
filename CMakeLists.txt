@@ -1,0 +1,31 @@
+# cmake file
+
+cmake_minimum_required(VERSION 3.0)
+
+set(PROJECT_NAME "philtron")
+
+project(${PROJECT_NAME} C)
+
+
+# requirements
+
+
+# configuration
+
+set(LIB_NAME ${PROJECT_NAME})
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+add_library(${LIB_NAME} SHARED
+  philtron.c)
+
+
+# installation
+
+install(DIRECTORY include DESTINATION .)
+install(TARGETS ${LIB_NAME} LIBRARY DESTINATION "lib")
+
