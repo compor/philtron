@@ -57,11 +57,24 @@ static AllocationTracker gAllocationTracker;
 /* external calls to be filtered */
 
 extern "C" void *EXTERNAL_MALLOC(size_t s) {
+  void *malloc_sym = dlsym(RTLD_NEXT,"malloc");
+  external_malloc_t malloc_cb = reinterpret_cast<external_malloc_t>(malloc_sym);
 
-  return NULL;
+  void *ptr = malloc_cb(s);
+
+  if(ptr)
+    gAllocationTracker.allocate(ptr, s);
+
+  return ptr;
 }
 
 extern "C" void EXTERNAL_FREE(void *ptr) {
+  void *free_sym = dlsym(RTLD_NEXT, "free");
+  external_free_t free_cb = reinterpret_cast<external_free_t>(free_sym);
+
+  gAllocationTracker.deallocate(ptr);
+
+  free_cb(ptr);
 
   return;
 }
