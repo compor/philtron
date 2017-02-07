@@ -17,6 +17,31 @@
 // using std::map
 
 
+class AllocationTracer {
+public:
+  using ptr_t = long long unsigned int;
+  using alloc_size_t = long long unsigned int;
+
+  AllocationTracer() = default;
+  AllocationTracer(const AllocationTracer &) = default;
+  ~AllocationTracer() = default;
+
+  void allocate(ptr_t ptr, alloc_size_t size) {
+
+    return;
+  }
+
+  void deallocate(ptr_t ptr) {
+
+    return;
+  }
+
+private:
+  static std::map<ptr_t, alloc_size_t> allocations;
+
+};
+
+
 /* external calls to be filtered */
 
 extern "C" void *EXTERNAL_MALLOC(size_t s) {
@@ -32,21 +57,6 @@ extern "C" void EXTERNAL_FREE(void *ptr) {
 
 /* internal calls */
 
-extern "C" {
 
-static void *
-philtron_malloc(size_t s) {
-
-  return NULL;
-}
-
-
-static void
-philtron_free(void *ptr) {
-
-  return;
-}
-
-} /* extern "C" */
 
 
