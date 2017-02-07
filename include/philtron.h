@@ -10,6 +10,7 @@
 /* utility macros */
 
 #define STRINGIFY(str) #str
+#define XSTRINGIFY(str) STRINGIFY(str)
 
 
 /* external calls to be filtered */
