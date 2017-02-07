@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.0)
 
 set(PROJECT_NAME "philtron")
 
-project(${PROJECT_NAME} C)
+project(${PROJECT_NAME} C CXX)
 
 
 # requirements
@@ -21,7 +21,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_library(${LIB_NAME} SHARED
-  src/philtron.c)
+  src/philtron.cpp)
 
 
 # installation
