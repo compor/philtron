@@ -26,12 +26,21 @@ public:
   AllocationTracer(const AllocationTracer &) = default;
   ~AllocationTracer() = default;
 
-  void allocate(ptr_t ptr, alloc_size_t size) {
+  void allocate(void *ptr, alloc_size_t size) {
+    auto ptr_key = reinterpret_cast<ptr_t>(ptr);
+
+    allocations[ptr_key] = size;
 
     return;
   }
 
   void deallocate(ptr_t ptr) {
+    auto ptr_key = reinterpret_cast<ptr_t>(ptr);
+
+    auto found = allocations.find(ptr_key);
+    if(found != allocations.end()) {
+      allocations.erase(found);
+    }
 
     return;
   }
