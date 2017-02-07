@@ -8,6 +8,7 @@
 #include <stdlib.h>
 // using size_t
 // using NULL
+// using atexit
 
 #include <assert.h>
 // using assert
@@ -73,6 +74,11 @@ private:
 
 static AllocationTracker gAllocationTracker;
 
+static void atexit_report(void) {
+  gAllocationTracker.report();
+
+  return;
+}
 
 
 // external function wrappers
