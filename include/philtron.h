@@ -2,7 +2,14 @@
 #ifndef PHILTRON_H
 #define PHILTRON_H
 
+/* c includes */
+
 #include <stdlib.h>
+/* using size_t */
+
+/* utility macros */
+
+#define STRINGIFY(str) #str
 
 
 /* external calls to be filtered */
