@@ -17,18 +17,20 @@ static long long int gPeakAllocationSize = 0ull;
 
 /* external calls to be filtered */
 
-void *EXTERNAL_MALLOC(size_t s) {
+extern "C" void *EXTERNAL_MALLOC(size_t s) {
 
   return NULL;
 }
 
-void EXTERNAL_FREE(void *ptr) {
+extern "C" void EXTERNAL_FREE(void *ptr) {
 
   return;
 }
 
 
 /* internal calls */
+
+extern "C" {
 
 static void *
 philtron_malloc(size_t s) {
@@ -42,5 +44,7 @@ philtron_free(void *ptr) {
 
   return;
 }
+
+} /* extern "C" */
 
 
