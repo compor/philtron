@@ -16,6 +16,10 @@
 
 // cxx includes
 
+#include <iostream>
+// using std::cerr
+// using std::endl
+
 #include <map>
 // using std::map
 
@@ -33,10 +37,10 @@ public:
     auto ptr_key = reinterpret_cast<ptr_t>(ptr);
 
     allocations[ptr_key] = size;
-    current_total += size;
+    current_total_memory += size;
 
-    if(current_total > peak_total)
-      peak_total = current_total;
+    if(current_total_memory > peak_total_memory)
+      peak_total_memory = current_total_memory;
 
     return;
   }
@@ -52,17 +56,26 @@ public:
     return;
   }
 
+  void report(void) {
+    std::cerr << "memory peak total:" << peak_total_memory << std::endl;
+
+    return;
+  }
+
 private:
   std::map<ptr_t, alloc_size_t> allocations;
-  alloc_size_t current_total;
-  alloc_size_t peak_total;
+  alloc_size_t current_total_memory;
+  alloc_size_t peak_total_memory;
 };
 
+
+// global objects and functions
 
 static AllocationTracker gAllocationTracker;
 
 
-/* external calls to be filtered */
+
+// external function wrappers
 
 extern "C" void *EXTERNAL_MALLOC(size_t s) {
   void *malloc_sym = dlsym(RTLD_NEXT, XSTRINGIFY(EXTERNAL_MALLOC));
@@ -90,10 +103,5 @@ extern "C" void EXTERNAL_FREE(void *ptr) {
 
   return;
 }
-
-
-/* internal calls */
-
-
 
 
