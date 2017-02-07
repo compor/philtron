@@ -1,18 +1,20 @@
 
-/* project includes */
+// project includes
 
 #include "philtron.h"
 
-/* std includes */
+// c includes
 
 #include <stdlib.h>
-// size_t
-// NULL
+// using size_t
+// using NULL
 
 #include <dlfcn.h>
 
+// cxx includes
 
-static long long int gPeakAllocationSize = 0ull;
+#include <map>
+// using std::map
 
 
 /* external calls to be filtered */
