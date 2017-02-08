@@ -23,6 +23,11 @@
 #include <map>
 // using std::map
 
+// utility macros
+
+#define STRINGIFY(str) #str
+#define XSTRINGIFY(str) STRINGIFY(str)
+
 
 class AllocationTracker {
 public:
@@ -80,7 +85,7 @@ static AllocationTracker gAllocationTracker;
 
 // external function wrappers
 
-extern "C" void *EXTERNAL_MALLOC(size_t s) {
+void *EXTERNAL_MALLOC(size_t s) {
   void *malloc_sym = dlsym(RTLD_NEXT, XSTRINGIFY(EXTERNAL_MALLOC));
   external_malloc_t malloc_cb = reinterpret_cast<external_malloc_t>(malloc_sym);
 
@@ -94,7 +99,7 @@ extern "C" void *EXTERNAL_MALLOC(size_t s) {
   return ptr;
 }
 
-extern "C" void EXTERNAL_FREE(void *ptr) {
+void EXTERNAL_FREE(void *ptr) {
   void *free_sym = dlsym(RTLD_NEXT, XSTRINGIFY(EXTERNAL_FREE));
   external_free_t free_cb = reinterpret_cast<external_free_t>(free_sym);
 
