@@ -84,7 +84,11 @@ private:
 
 // global objects and functions
 
-static AllocationTracker gAllocationTracker;
+AllocationTracker &allocationTracker(void) {
+  static AllocationTracker gAllocationTracker;
+
+  return gAllocationTracker;
+}
 
 
 // external function wrappers
@@ -98,7 +102,7 @@ void *EXTERNAL_MALLOC(size_t s) {
   void *ptr = malloc_cb(s);
 
   if(ptr)
-    gAllocationTracker.allocate(ptr, s);
+    allocationTracker().allocate(ptr, s);
 
   return ptr;
 }
@@ -109,7 +113,7 @@ void EXTERNAL_FREE(void *ptr) {
 
   assert(free_cb != NULL);
 
-  gAllocationTracker.deallocate(ptr);
+  allocationTracker().deallocate(ptr);
 
   free_cb(ptr);
 
