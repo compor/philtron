@@ -63,6 +63,7 @@ public:
     auto found = allocations.find(ptr_key);
     if(found != allocations.end()) {
       allocations.erase(found);
+      current_total_memory -= found->second;
     }
 
     return;
