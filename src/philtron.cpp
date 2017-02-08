@@ -34,7 +34,10 @@ public:
   using ptr_t = long long unsigned int;
   using alloc_size_t = long long unsigned int;
 
-  AllocationTracker() = default;
+  AllocationTracker() :
+    current_total_memory(0),
+    peak_total_memory(0)
+  {}
   AllocationTracker(const AllocationTracker &) = default;
   ~AllocationTracker() {
     this->report();
