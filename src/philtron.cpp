@@ -8,7 +8,6 @@
 #include <stdlib.h>
 // using size_t
 // using NULL
-// using atexit
 
 #include <assert.h>
 // using assert
@@ -32,7 +31,11 @@ public:
 
   AllocationTracker() = default;
   AllocationTracker(const AllocationTracker &) = default;
-  ~AllocationTracker() = default;
+  ~AllocationTracker() {
+    this->report();
+
+    return;
+  }
 
   void allocate(void *ptr, alloc_size_t size) {
     auto ptr_key = reinterpret_cast<ptr_t>(ptr);
@@ -58,7 +61,7 @@ public:
   }
 
   void report(void) {
-    std::cerr << "memory peak total:" << peak_total_memory << std::endl;
+    std::cerr << "memory peak total: " << peak_total_memory << std::endl;
 
     return;
   }
@@ -73,12 +76,6 @@ private:
 // global objects and functions
 
 static AllocationTracker gAllocationTracker;
-
-static void atexit_report(void) {
-  gAllocationTracker.report();
-
-  return;
-}
 
 
 // external function wrappers
